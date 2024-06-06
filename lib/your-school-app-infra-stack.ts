@@ -1,28 +1,21 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import * as lambda from "aws-cdk-lib/aws-lambda";
+import SchoolsDynamoDbTable from "./schoolStack/dynamodb/SchoolsDynamoDbTable";
+import { SchoolLambdaConstruct } from "./schoolStack/lambdas/SchoolLambdaConstructs";
+import { ApiGatewayConstruct } from "./apiGateway/ApiGatewayConstruct";
+import { LambdaConstructs } from "./shared/LambdaConstructs";
 
 export class YourSchoolAppInfraStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const lambdaFunction = new lambda.Function(this, "LambdaFunction", {
-      runtime: lambda.Runtime.PYTHON_3_9,
-      code: lambda.Code.fromAsset("lambda"),
-      handler: "testlambda.handler",
-    });
+    //add school stack
+    const dynamodbTable = new SchoolsDynamoDbTable(this);
+    const schoolLambdaConstruct = new SchoolLambdaConstruct(this, dynamodbTable);
 
-    const functionUrl = lambdaFunction.addFunctionUrl({
-      authType: lambda.FunctionUrlAuthType.NONE,
-      cors: {
-        allowedOrigins: ["*"],
-        allowedMethods: [lambda.HttpMethod.ALL],
-        allowedHeaders: ["*"],
-      },
-    });
+    const lambdaConstructs = new LambdaConstructs();
+    lambdaConstructs.schoolLambdaContructs = schoolLambdaConstruct;
 
-    new cdk.CfnOutput(this, "Url", {
-      value: functionUrl.url,
-    });
+    new ApiGatewayConstruct(this, lambdaConstructs);
   }
 }
