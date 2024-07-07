@@ -8,7 +8,7 @@ export class GetAllSchoolsLambda extends Function {
     constructor(scope: Construct, dbTableName: string) {
         super(scope, GetAllSchoolsLambda.ID, {
             ...defaultLambdaProps,
-            handler: "GetAllSchools.handler",
+            handler: "GetAllSchools.lambda_handler",
             environment: {
                 TABLE_NAME: dbTableName
             }

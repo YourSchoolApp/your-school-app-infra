@@ -12,7 +12,12 @@ export class ApiGatewayConstruct extends Construct {
             restApiName: 'School Api'
         })
 
-        const usersResource = api.root.addResource('schools');
-        usersResource.addMethod('Get', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda));   
+        const schoolResource = api.root.addResource('school');
+        schoolResource.addMethod('Get', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda));
+        schoolResource.addMethod('POST', new LambdaIntegration(lambdas.schoolLambdaContructs.createSchoolLambda));
+
+        const singleSchool = schoolResource.addResource('{id}'); // school/{id}
+        singleSchool.addMethod('GET', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda)); // GET /school/{id}
+        singleSchool.addMethod('PUT', new LambdaIntegration(lambdas.schoolLambdaContructs.updateSchoolByIdLambda)); // PUT /school/{id}
     }
 }
