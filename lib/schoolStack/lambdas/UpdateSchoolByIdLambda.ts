@@ -2,13 +2,13 @@ import { Function } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { defaultLambdaProps } from "./DefaultLambdaProps";
 
-export class GetAllSchoolsLambda extends Function {
-    public static readonly ID = "GetAllSchools";
+export class UpdateSchoolByIdLambda extends Function {
+    public static readonly ID = "UpdateSchoolById";
 
     constructor(scope: Construct, dbTableName: string) {
-        super(scope, GetAllSchoolsLambda.ID, {
+        super(scope, UpdateSchoolByIdLambda.ID, {
             ...defaultLambdaProps,
-            handler: "GetAllSchools.lambda_handler",
+            handler: "UpdateSchoolById.lambda_handler",
             environment: {
                 TABLE_NAME: dbTableName
             }

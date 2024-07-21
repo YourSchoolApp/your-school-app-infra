@@ -1,8 +1,19 @@
 import os;
 import json;
+import boto3
 
-def handler(event, context):
-    table = os.environ.get('TABLE_NAME')
+from Models.School import School;
+
+tableName = os.environ.get('TABLE_NAME')
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(tableName)
+
+def lambda_handler(event, context):
+    schools = []
+    response = table.scan()
+    items = response['Items']
+    
+    schools = [School(item) for item in items]
 
     response = {
             'statusCode': 200,
@@ -10,8 +21,7 @@ def handler(event, context):
                 'Content-Type': 'application/json'
             },
             'body': json.dumps({
-                'tableName': table,
-                'functionName': "getAllSchools"
+                'schools': [vars(school) for school in schools]
             })
         }
 
