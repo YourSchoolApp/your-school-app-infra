@@ -9,6 +9,7 @@ export class GetAllSchoolsLambda extends Function {
         super(scope, GetAllSchoolsLambda.ID, {
             ...defaultLambdaProps,
             handler: "GetAllSchools.lambda_handler",
+            layers: [layer],
             environment: {
                 TABLE_NAME: dbTableName
             }
