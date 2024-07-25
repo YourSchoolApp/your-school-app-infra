@@ -6,6 +6,7 @@ import { GetAllSchoolsLambda } from "./GetAllSchoolsLambda";
 import { CreateSchoolLambda } from "./CreateSchoolLambda";
 import { GetSchoolByIdLambda } from "./GetSchoolByIdLambda";
 import { UpdateSchoolByIdLambda } from "./UpdateSchoolByIdLambda";
+import { PythonSharedLayer } from "../../PythonSharedLayer";
 
 export class SchoolLambdaConstruct extends Construct {
     public static readonly ID = 'SchoolLambdaConstruct';
@@ -16,17 +17,18 @@ export class SchoolLambdaConstruct extends Construct {
 
     constructor(scope: Construct, dynamoDbTable: Table) {
         super(scope, SchoolLambdaConstruct.ID);
+        const sharedLayer = new PythonSharedLayer(this);
         
-        this.getAllSchoolsLambda = new GetAllSchoolsLambda(this, dynamoDbTable.tableName);
+        this.getAllSchoolsLambda = new GetAllSchoolsLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantReadWriteData(this.getAllSchoolsLambda);
 
-        this.createSchoolLambda = new CreateSchoolLambda(this, dynamoDbTable.tableName);
+        this.createSchoolLambda = new CreateSchoolLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantWriteData(this.createSchoolLambda);
 
-        this.getSchoolByIdLambda = new GetSchoolByIdLambda(this, dynamoDbTable.tableName);
+        this.getSchoolByIdLambda = new GetSchoolByIdLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantReadWriteData(this.getSchoolByIdLambda);
 
-        this.updateSchoolByIdLambda = new UpdateSchoolByIdLambda(this, dynamoDbTable.tableName);
+        this.updateSchoolByIdLambda = new UpdateSchoolByIdLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantWriteData(this.createSchoolLambda);
     }
 }
