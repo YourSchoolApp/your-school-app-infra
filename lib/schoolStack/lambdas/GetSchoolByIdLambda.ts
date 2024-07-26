@@ -1,13 +1,14 @@
 import { Function, LayerVersion } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
-import { defaultLambdaProps } from "./DefaultLambdaProps";
+import * as lambda from 'aws-cdk-lib/aws-lambda';
 
 export class GetSchoolByIdLambda extends Function {
     public static readonly ID = "GetSchoolById";
 
     constructor(scope: Construct, dbTableName: string, layer: LayerVersion) {
         super(scope, GetSchoolByIdLambda.ID, {
-            ...defaultLambdaProps,
+            runtime: lambda.Runtime.PYTHON_3_9,
+            code: lambda.Code.fromAsset('./src/lambdas/schools/GetSchoolById'),
             handler: "GetSchoolById.lambda_handler",
             layers: [layer],
             environment: {

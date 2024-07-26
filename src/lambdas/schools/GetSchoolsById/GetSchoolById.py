@@ -1,9 +1,11 @@
-
-import os;
-import json;
-import boto3;
+import os
+import json
+import boto3
+import sys
 
 from Models.School import School
+
+sys.path.append('/opt')
 
 tableName = os.environ.get('TABLE_NAME')
 dynamodb = boto3.resource('dynamodb')
