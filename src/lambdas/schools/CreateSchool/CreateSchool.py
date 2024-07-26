@@ -4,7 +4,7 @@ import boto3
 import sys
 
 sys.path.append('/opt')
-from Models import School
+from Models.School import School
 
 tableName = os.environ.get('TABLE_NAME')
 dynamodb = boto3.resource('dynamodb')
