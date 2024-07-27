@@ -3,25 +3,28 @@ import json
 import boto3
 import sys
 
-from Models.School import School
-
 sys.path.append('/opt')
+
+from Models.School import School
 
 tableName = os.environ.get('TABLE_NAME')
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(tableName)
 
 def lambda_handler(event, context):
+    id = None
     
     school_data = event.get('school')
+    path_parameters = event.get('pathParameters', {})
+    id = path_parameters.get('id')
     
-    if not school_data or 'id' not in school_data:
+    if not school_data or not id:
         return {
             'statusCode': 400,
             'body': json.dumps({'message': 'school data with id is required'})
         }
     
-    school = School(school_data, school_data['id'])
+    school = School(school_data, id)
     
     try:
         update_expression = "SET schoolName = :schoolName, registrationNo = :registrationNo, registeredTo = :registeredTo, address = :address, phoneNos = :phoneNos, pocName = :pocName, pocNos = :pocNos, emails = :emails"
@@ -37,7 +40,7 @@ def lambda_handler(event, context):
         }
         
         table.update_item(
-            Key={'id': school.id},
+            Key={'id': id},
             UpdateExpression=update_expression,
             ExpressionAttributeValues=expression_attribute_values
         )

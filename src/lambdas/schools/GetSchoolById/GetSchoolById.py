@@ -3,9 +3,9 @@ import json
 import boto3
 import sys
 
-from Models.School import School
-
 sys.path.append('/opt')
+
+from Models.School import School
 
 tableName = os.environ.get('TABLE_NAME')
 dynamodb = boto3.resource('dynamodb')
@@ -25,6 +25,7 @@ def lambda_handler(event, context):
     
     try:
         response = table.get_item(Key={'id': id})
+        print(response)
         item = response.get('Item')
         
         if not item:
@@ -34,7 +35,6 @@ def lambda_handler(event, context):
             }
             
         school = School(item, id)
-        
         return {
             'statusCode': 200,
             'body': json.dumps(vars(school))

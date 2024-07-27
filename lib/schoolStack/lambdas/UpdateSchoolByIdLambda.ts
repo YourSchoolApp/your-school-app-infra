@@ -8,7 +8,7 @@ export class UpdateSchoolByIdLambda extends Function {
     constructor(scope: Construct, dbTableName: string, layer: LayerVersion) {
         super(scope, UpdateSchoolByIdLambda.ID, {
             runtime: lambda.Runtime.PYTHON_3_9,
-            code: lambda.Code.fromAsset('./src/lambdas/schools/GetSchoolById'),
+            code: lambda.Code.fromAsset('./src/lambdas/schools/UpdateSchoolById'),
             handler: "UpdateSchoolById.lambda_handler",
             layers: [layer],
             environment: {

@@ -17,7 +17,7 @@ export class ApiGatewayConstruct extends Construct {
         schoolResource.addMethod('POST', new LambdaIntegration(lambdas.schoolLambdaContructs.createSchoolLambda));
 
         const singleSchool = schoolResource.addResource('{id}'); // schools/{id}
-        singleSchool.addMethod('GET', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda)); // GET /schools/{id}
+        singleSchool.addMethod('GET', new LambdaIntegration(lambdas.schoolLambdaContructs.getSchoolByIdLambda)); // GET /schools/{id}
         singleSchool.addMethod('PUT', new LambdaIntegration(lambdas.schoolLambdaContructs.updateSchoolByIdLambda)); // PUT /schools/{id}
     }
 }

@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     response = table.scan()
     items = response['Items']
     
-    schools = [School(item) for item in items]
+    schools = [School(item, item['id']) for item in items]
 
     response = {
             'statusCode': 200,
