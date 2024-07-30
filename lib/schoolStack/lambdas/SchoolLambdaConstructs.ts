@@ -9,7 +9,7 @@ import { UpdateSchoolByIdLambda } from "./UpdateSchoolByIdLambda";
 import { PythonSharedLayer } from "../../PythonSharedLayer";
 
 export class SchoolLambdaConstruct extends Construct {
-    public static readonly ID = 'SchoolLambdaConstruct';
+    public static readonly ID = 'School';
     public readonly getAllSchoolsLambda: IFunction;
     public readonly createSchoolLambda: IFunction;
     public readonly getSchoolByIdLambda: IFunction;
@@ -23,12 +23,12 @@ export class SchoolLambdaConstruct extends Construct {
         dynamoDbTable.grantReadWriteData(this.getAllSchoolsLambda);
 
         this.createSchoolLambda = new CreateSchoolLambda(this, dynamoDbTable.tableName, sharedLayer);
-        dynamoDbTable.grantWriteData(this.createSchoolLambda);
+        dynamoDbTable.grantReadWriteData(this.createSchoolLambda);
 
         this.getSchoolByIdLambda = new GetSchoolByIdLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantReadWriteData(this.getSchoolByIdLambda);
 
         this.updateSchoolByIdLambda = new UpdateSchoolByIdLambda(this, dynamoDbTable.tableName, sharedLayer);
-        dynamoDbTable.grantWriteData(this.createSchoolLambda);
+        dynamoDbTable.grantReadWriteData(this.updateSchoolByIdLambda);
     }
 }

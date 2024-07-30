@@ -1,15 +1,11 @@
 import os
 import json
-import boto3
 import sys
-
 sys.path.append('/opt')
 
-from Models.School import School
+from Services.school_service import SchoolService
 
 tableName = os.environ.get('TABLE_NAME')
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(tableName)
     
 def lambda_handler(event, context):
     id = None
@@ -17,16 +13,16 @@ def lambda_handler(event, context):
     path_parameters = event.get('pathParameters', {})
     id = path_parameters.get('id')
     
-    if not id:
+    if id is None:
         return {
             'statusCode': 400,
-            'body': json.dumps({'message': 'school_id is required'})
+            'body': json.dumps({'message': 'school id is required'})
         }
     
     try:
-        response = table.get_item(Key={'id': id})
-        print(response)
-        item = response.get('Item')
+        school_service = SchoolService(tableName)
+        
+        item = school_service.get_school_by_id(id)
         
         if not item:
             return {
@@ -34,10 +30,9 @@ def lambda_handler(event, context):
                 'body': json.dumps({'message': 'School not found'})
             }
             
-        school = School(item, id)
         return {
             'statusCode': 200,
-            'body': json.dumps(vars(school))
+            'body': json.dumps(item)
         }
     
     except Exception as e:

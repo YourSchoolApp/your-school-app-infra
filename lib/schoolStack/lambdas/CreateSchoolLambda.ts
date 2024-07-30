@@ -8,8 +8,8 @@ export class CreateSchoolLambda extends Function {
     constructor(scope: Construct, dbTableName: string, layer: LayerVersion) {
         super(scope, CreateSchoolLambda.ID, {
             runtime: lambda.Runtime.PYTHON_3_9,
-            code: lambda.Code.fromAsset('./src/lambdas/schools/CreateSchool'),
-            handler: "CreateSchool.lambda_handler",
+            code: lambda.Code.fromAsset('./src/Lambdas/School/CreateSchool'),
+            handler: "create_school.lambda_handler",
             layers: [layer],
             environment: {
                 TABLE_NAME: dbTableName

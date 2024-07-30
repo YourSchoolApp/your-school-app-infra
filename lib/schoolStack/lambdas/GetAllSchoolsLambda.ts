@@ -8,8 +8,8 @@ export class GetAllSchoolsLambda extends Function {
     constructor(scope: Construct, dbTableName: string, layer: LayerVersion) {
         super(scope, GetAllSchoolsLambda.ID, {
             runtime: lambda.Runtime.PYTHON_3_9,
-            code: lambda.Code.fromAsset('./src/lambdas/schools/GetAllSchools'),
-            handler: "GetAllSchools.lambda_handler",
+            code: lambda.Code.fromAsset('./src/Lambdas/School/GetAllSchools'),
+            handler: "get_all_schools.lambda_handler",
             layers: [layer],
             environment: {
                 TABLE_NAME: dbTableName

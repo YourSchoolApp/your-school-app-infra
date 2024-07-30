@@ -14,16 +14,3 @@ class School:
         self.pocName = schoolData['pocName']
         self.pocNos = schoolData['pocNos']
         self.emails = schoolData['emails']
-        
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'schoolName': self.schoolName,
-            'registrationNo': self.registrationNo,
-            'registeredTo': self.registeredTo,
-            'address': self.address,
-            'phoneNos': self.phoneNos,
-            'pocName': self.pocName,
-            'pocNos': self.pocNos,
-            'emails': self.emails
-        }
