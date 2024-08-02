@@ -13,12 +13,6 @@ def lambda_handler(event, context):
     path_parameters = event.get('pathParameters', {})
     id = path_parameters.get('id')
     
-    if id is None:
-        return {
-            'statusCode': 400,
-            'body': json.dumps({'message': 'school id is required'})
-        }
-    
     try:
         school_service = SchoolService(tableName)
         

@@ -14,7 +14,7 @@ def lambda_handler(event, context):
     path_parameters = event.get('pathParameters', {})
     id = path_parameters.get('id')
     
-    if body is None or id is None:
+    if body is None:
         return {
             'statusCode': 400,
             'body': json.dumps({
