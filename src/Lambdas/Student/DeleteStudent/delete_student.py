@@ -24,7 +24,7 @@ def lambda_handler(event, context):
         }
     
     try:
-        student = student_service.delete_student(school_id, student_id)
+        student_service.delete_student(school_id, student_id)
 
     except Exception as e:
         return{
@@ -33,6 +33,6 @@ def lambda_handler(event, context):
         }
     
     return {
-        'statusCode': 200,
-        'body': json.dumps(vars(student))
+        'statusCode': 204,
+        'body': json.dumps({'message': 'Deleted student'})
     }

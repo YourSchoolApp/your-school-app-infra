@@ -11,7 +11,6 @@ def lambda_handler(event, context):
     student_service = StudentService(tableName)
 
     school_id = None
-    student_id = None
     
     query_parameters = event.get('queryStringParameters', {})
     school_id = query_parameters.get('school_id', None)
@@ -23,15 +22,15 @@ def lambda_handler(event, context):
         }
     
     try:
-        student = student_service.get_students_by_school_id(school_id, student_id)
+        students_response = student_service.get_students_by_school_id(school_id)
         
     except Exception as e:
         return{
             'statusCode': 400,
-            'body': json.dumps({'message': 'Could not create student'})
+            'body': json.dumps({'message': f'Could not get stuednts {e}'})
         }
     
     return {
         'statusCode': 200,
-        'body': json.dumps(vars(student))
+        'body': json.dumps(students_response)
     }
