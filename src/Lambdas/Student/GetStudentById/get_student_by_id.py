@@ -24,15 +24,15 @@ def lambda_handler(event, context):
         }
     
     try:
-        student = student_service.get_student_by_id(school_id, student_id)
+        student_response = student_service.get_student_by_id(school_id, student_id)
         
     except Exception as e:
         return{
             'statusCode': 400,
-            'body': json.dumps({'message': 'Could not create student'})
+            'body': json.dumps({'message': 'Could not get student'})
         }
     
     return {
         'statusCode': 200,
-        'body': json.dumps(vars(student))
+        'body': json.dumps(student_response)
     }

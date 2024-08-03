@@ -17,16 +17,18 @@ def lambda_handler(event, context):
     school_id = query_parameters.get('school_id')
     student_id = query_parameters.get('student_id')
 
-    student_data = event.get('body')
+    body = event.get('body')
 
-    if student_id is None or school_id is None or student_data is None:
+    if student_id is None or school_id is None or body is None:
         return{
             'statusCode': 400,
             'body': json.dumps({'message': 'Need school and student id'})
         }
     
+    student_data = json.loads(body)
+
     try:
-        student = student_service.update_student(student_data, school_id, student_id)
+        student_service.update_student(student_data, school_id, student_id)
         
     except Exception as e:
         return{
@@ -35,6 +37,6 @@ def lambda_handler(event, context):
         }
     
     return {
-        'statusCode': 200,
-        'body': json.dumps(vars(student))
+        'statusCode': 201,
+        'body': json.dumps({'message': 'Updated student'})
     }

@@ -2,7 +2,7 @@ import boto3
 import boto3.dynamodb
 import boto3.dynamodb.conditions
 
-from Models import Student
+from Models.student import Student
 
 PARTITION_KEY = "school_id"
 SORT_KEY = "student_id"
@@ -18,8 +18,10 @@ class StudentService():
         item = student.__dict__
 
         self.table.put_item(
-            Item = vars(item)
+            Item = item
         )
+
+        return student
 
     def create_students(self, students_data, school_id):
         students = []
@@ -31,7 +33,8 @@ class StudentService():
         for i in range(0, len(students), 25):
             batch = students[i:i + 25]
             with self.table.batch_writer() as batch_writer:
-                for item in batch:
+                for student in batch:
+                    item = student.__dict__
                     batch_writer.put_item(Item=item)
                     
         return students_data
@@ -44,14 +47,13 @@ class StudentService():
             }
         )
 
-        response.get('Item', None)
-        return response
+        return response.get('Item')
 
     def get_students_by_school_id(self, school_id):
         response = self.table.query(
             KeyConditionExpression = boto3.dynamodb.conditions.Key(PARTITION_KEY).eq(school_id)
         )
-        return response.get('Items', None)
+        return response.get('Items')
 
     def update_student(self, student_data, school_id, student_id):
         update_expression = "set "
@@ -82,4 +84,3 @@ class StudentService():
                 SORT_KEY: student_id
             }
         )
-        return student_id
