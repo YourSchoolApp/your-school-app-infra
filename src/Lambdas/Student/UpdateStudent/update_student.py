@@ -37,6 +37,6 @@ def lambda_handler(event, context):
         }
     
     return {
-        'statusCode': 201,
+        'statusCode': 204,
         'body': json.dumps({'message': 'Updated student'})
     }

@@ -15,9 +15,8 @@ export class SchoolLambdaConstruct extends Construct {
     public readonly getSchoolByIdLambda: IFunction;
     public readonly updateSchoolByIdLambda: IFunction;
 
-    constructor(scope: Construct, dynamoDbTable: Table) {
+    constructor(scope: Construct, dynamoDbTable: Table, sharedLayer: PythonSharedLayer) {
         super(scope, SchoolLambdaConstruct.ID);
-        const sharedLayer = new PythonSharedLayer(this);
         
         this.getAllSchoolsLambda = new GetAllSchoolsLambda(this, dynamoDbTable.tableName, sharedLayer);
         dynamoDbTable.grantReadWriteData(this.getAllSchoolsLambda);

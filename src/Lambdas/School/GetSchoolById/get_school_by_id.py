@@ -11,12 +11,12 @@ def lambda_handler(event, context):
     id = None
     
     path_parameters = event.get('pathParameters', {})
-    id = path_parameters.get('id')
+    school_id = path_parameters.get('id')
     
     try:
         school_service = SchoolService(tableName)
         
-        item = school_service.get_school_by_id(id)
+        item = school_service.get_school_by_id(school_id)
         
         if not item:
             return {
