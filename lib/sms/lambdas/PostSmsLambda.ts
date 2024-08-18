@@ -14,11 +14,15 @@ export class PostSmsLambda extends Function {
             timeout: Duration.seconds(900),
             layers: [layer],
             environment: {
-                TWILIO_ACCOUNT_SID: 'AC14c8095db87dd519b1a746ccbadcc5a4',
-                TWILIO_AUTH_TOKEN: '4f30523bc8bc4887f02373d393f4e32b',
-                TWILIO_NUMBER: '+17627635839',
+                TWILIO_ACCOUNT_SID: 'copy_account_sid',
+                TWILIO_AUTH_TOKEN: 'copy_token',
+                TWILIO_NUMBER: 'copy_number_here',
                 STUDENT_TABLE_NAME: studentDbTableName
             }
         })
     }
 }
+
+// account sid 'AC14c8095db87dd519b1a746ccbadcc5a4'
+// token '4f30523bc8bc4887f02373d393f4e32b'
+// twilio no '+17627635839'
