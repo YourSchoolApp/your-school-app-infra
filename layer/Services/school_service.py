@@ -13,7 +13,7 @@ class SchoolService:
         response = self.table.scan()
         items = response['Items']
         
-        schools = [School(item, item['id']) for item in items]
+        schools = [School(item, item['school_id']) for item in items]
         return schools
     
     def create_school(self, school_data):
@@ -23,12 +23,12 @@ class SchoolService:
         
         return school
 
-    def get_school_by_id(self, id):
-        response = self.table.get_item(Key={'id': id})
+    def get_school_by_id(self, school_id):
+        response = self.table.get_item(Key={'school_id': school_id})
         item = response.get('Item')
         return item
     
-    def update_school(self, school_data, id):
+    def update_school(self, school_data, school_id):
         update_expression = "set "
         expression_attribute_values = {}
         expression_attribute_names = {}
@@ -42,7 +42,7 @@ class SchoolService:
         
         self.table.update_item(
             Key={
-                'id': id
+                'school_id': school_id
             },
             UpdateExpression=update_expression,
             ExpressionAttributeValues=expression_attribute_values,

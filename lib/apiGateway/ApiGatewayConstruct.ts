@@ -13,7 +13,7 @@ export class ApiGatewayConstruct extends Construct {
         })
 
         const schoolResource = api.root.addResource('schools');
-        schoolResource.addMethod('Get', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda));
+        schoolResource.addMethod('GET', new LambdaIntegration(lambdas.schoolLambdaContructs.getAllSchoolsLambda));
         schoolResource.addMethod('POST', new LambdaIntegration(lambdas.schoolLambdaContructs.createSchoolLambda));
 
         const singleSchool = schoolResource.addResource('{id}');
@@ -21,13 +21,16 @@ export class ApiGatewayConstruct extends Construct {
         singleSchool.addMethod('PUT', new LambdaIntegration(lambdas.schoolLambdaContructs.updateSchoolByIdLambda));
 
         const studentsResource = api.root.addResource('students');
-        studentsResource.addMethod('Get', new LambdaIntegration(lambdas.studentLambdaContructs.getStudentsBySchoolIdLambda));
+        studentsResource.addMethod('GET', new LambdaIntegration(lambdas.studentLambdaContructs.getStudentsBySchoolIdLambda));
         studentsResource.addMethod('POST', new LambdaIntegration(lambdas.studentLambdaContructs.createStudentsLambda));
 
         const studentResource = api.root.addResource('student');
-        studentResource.addMethod('Get', new LambdaIntegration(lambdas.studentLambdaContructs.getStudentByIdLambda));
+        studentResource.addMethod('GET', new LambdaIntegration(lambdas.studentLambdaContructs.getStudentByIdLambda));
         studentResource.addMethod('POST', new LambdaIntegration(lambdas.studentLambdaContructs.createStudentLambda));
         studentResource.addMethod('PUT', new LambdaIntegration(lambdas.studentLambdaContructs.updateStudentLambda));
         studentResource.addMethod('DELETE', new LambdaIntegration(lambdas.studentLambdaContructs.deleteStudentLambda));
+
+        const smsResource = api.root.addResource('sms');
+        smsResource.addMethod('POST', new LambdaIntegration(lambdas.smsLambdaConstructs.postSmsLambda));
     }
 }

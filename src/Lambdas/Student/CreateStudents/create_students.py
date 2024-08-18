@@ -22,7 +22,7 @@ def lambda_handler(event, context):
     
     students_data = json.loads(body)
     query_parameters = event.get('queryStringParameters', {})
-    school_id = query_parameters.get('school_id', None)
+    school_id = query_parameters.get('school_id')
 
     if school_id is None:
         return{

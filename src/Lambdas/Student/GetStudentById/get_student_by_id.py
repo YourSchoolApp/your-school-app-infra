@@ -14,8 +14,8 @@ def lambda_handler(event, context):
     student_id = None
     
     query_parameters = event.get('queryStringParameters', {})
-    school_id = query_parameters.get('school_id', None)
-    student_id = query_parameters.get('student_id', None)
+    school_id = query_parameters.get('school_id')
+    student_id = query_parameters.get('student_id')
 
     if student_id is None or school_id is None:
         return{

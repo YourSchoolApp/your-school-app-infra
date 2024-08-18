@@ -4,7 +4,7 @@ import { Construct } from "constructs";
 
 export class SchoolsDynamoDbTable extends Table {
     public static readonly TABLE_ID = 'Schools';
-    public static readonly PARTITION_KEY = 'id';
+    public static readonly PARTITION_KEY = 'school_id';
 
     constructor(scope: Construct) {
         super(scope, SchoolsDynamoDbTable.TABLE_ID, {
