@@ -22,7 +22,3 @@ export class PostSmsLambda extends Function {
         })
     }
 }
-
-// account sid 'AC14c8095db87dd519b1a746ccbadcc5a4'
-// token '4f30523bc8bc4887f02373d393f4e32b'
-// twilio no '+17627635839'
