@@ -15,7 +15,7 @@ export class PostSmsLambda extends Function {
             layers: [layer],
             environment: {
                 TWILIO_ACCOUNT_SID: 'AC14c8095db87dd519b1a746ccbadcc5a4',
-                TWILIO_AUTH_TOKEN: '4f30523bc8bc4887f02373d393f4e32b',
+                TWILIO_AUTH_TOKEN: '3097b4f3f7a7152329b987b0b9695bb8',
                 TWILIO_NUMBER: '+17627635839',
                 STUDENT_TABLE_NAME: studentDbTableName
             }
